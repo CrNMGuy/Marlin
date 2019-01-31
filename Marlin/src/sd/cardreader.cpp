@@ -628,6 +628,28 @@ void CardReader::beginautostart() {
   setroot();
 }
 
+
+void CardReader::launchlastfile() {
+
+  if (flag.sdprinting) return;
+
+  if (!isDetected()) initsd();
+
+  if (isDetected()) {
+    const uint16_t fileCnt = card.get_num_Files();
+    card.getfilename_sorted(fileCnt);
+    openAndPrintFile(card.filename);
+
+    #if ENABLED(USER_SCRIPT_AUDIBLE_FEEDBACK)
+      ui.completion_feedback();
+    #endif
+    #if ENABLED(USER_SCRIPT_RETURN)
+      ui.return_to_status();
+    #endif
+  }
+
+}
+
 void CardReader::closefile(const bool store_location) {
   file.sync();
   file.close();
