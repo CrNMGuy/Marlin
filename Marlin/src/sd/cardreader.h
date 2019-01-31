@@ -57,6 +57,7 @@ public:
 
   static void beginautostart();
   static void checkautostart();
+  static void launchlastfile();
 
   static void openFile(char * const path, const bool read, const bool subcall=false);
   static void openLogFile(char * const path);
